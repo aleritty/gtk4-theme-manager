@@ -1,0 +1,5 @@
+**/artifacts
+**/artifacts/**
+
+**/.env.**
+!**/.env.example

@@ -280,18 +280,24 @@ on_set_theme_button_clicked(GtkButton *button, gpointer user_data)
         {
             g_print("Setting theme: %s\n", data->theme_name);
             gchar *command = g_strdup_printf("gsettings set org.gnome.desktop.interface gtk-theme '%s'", data->theme_name);
-            if (g_spawn_command_line_async(command, NULL)) {
+            if (g_spawn_command_line_async(command, NULL))
+            {
                 g_print("Theme set successfully\n");
-            } else {
+            }
+            else
+            {
                 g_print("Failed to set theme\n");
             }
             g_free(command);
 
             // Set the shell theme using dconf
             gchar *dconf_command = g_strdup_printf("dconf write /org/gnome/shell/extensions/user-theme/name \"'%s'\"", data->theme_name);
-            if (g_spawn_command_line_async(dconf_command, NULL)) {
+            if (g_spawn_command_line_async(dconf_command, NULL))
+            {
                 g_print("Shell theme set successfully\n");
-            } else {
+            }
+            else
+            {
                 g_print("Failed to set shell theme\n");
             }
             g_free(dconf_command);
