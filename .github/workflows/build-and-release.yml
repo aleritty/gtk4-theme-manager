@@ -29,6 +29,20 @@ jobs:
           name: theme-manager
           path: theme-manager
 
+      - name: Build .deb package
+        run: |
+          mkdir -p debian/usr/bin debian/usr/share/icons/hicolor/256x256/apps debian/usr/share/applications
+          cp theme-manager debian/usr/bin/
+          cp favicon.png debian/usr/share/icons/hicolor/256x256/apps/theme-manager.png
+          cp theme-manager.desktop debian/usr/share/applications/
+          dpkg-deb --build debian theme-manager.deb
+
+      - name: Upload .deb artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: theme-manager-deb
+          path: theme-manager.deb
+
   release:
     runs-on: ubuntu-latest
     needs: build
