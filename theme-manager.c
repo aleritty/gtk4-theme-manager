@@ -59,15 +59,15 @@ create_sidebar(AppWidgets *widgets)
     gtk_list_box_row_set_child(GTK_LIST_BOX_ROW(user_row), user_box);
     gtk_list_box_append(GTK_LIST_BOX(listbox), user_row);
 
-    gchar *user_themes_path = g_build_filename(g_get_home_dir(), ".themes", NULL);
-    GDir *dir = g_dir_open(user_themes_path, 0, NULL);
+    gchar *theme_manager_path = g_build_filename(g_get_home_dir(), ".themes", NULL);
+    GDir *dir = g_dir_open(theme_manager_path, 0, NULL);
     GList *user_theme_list = NULL;
     const gchar *filename;
     if (dir)
     {
         while ((filename = g_dir_read_name(dir)) != NULL)
         {
-            gchar *theme_dir = g_build_filename(user_themes_path, filename, NULL);
+            gchar *theme_dir = g_build_filename(theme_manager_path, filename, NULL);
             gchar *index_file = g_build_filename(theme_dir, "index.theme", NULL);
             if (g_file_test(theme_dir, G_FILE_TEST_IS_DIR) && g_file_test(index_file, G_FILE_TEST_EXISTS))
             {
@@ -82,7 +82,7 @@ create_sidebar(AppWidgets *widgets)
             GtkWidget *row = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
             GtkWidget *name_label = gtk_label_new((gchar *)l->data);
             gtk_widget_set_halign(name_label, GTK_ALIGN_START);
-            GtkWidget *loc_label = gtk_label_new(user_themes_path);
+            GtkWidget *loc_label = gtk_label_new(theme_manager_path);
             gtk_widget_set_halign(loc_label, GTK_ALIGN_START);
             gtk_widget_add_css_class(loc_label, "dim-label");
             gtk_box_append(GTK_BOX(row), name_label);
@@ -91,7 +91,7 @@ create_sidebar(AppWidgets *widgets)
             gtk_list_box_row_set_child(GTK_LIST_BOX_ROW(list_row), row);
             ThemeRow *data = g_new0(ThemeRow, 1);
             data->theme_name = g_strdup((gchar *)l->data);
-            data->location = g_strdup(user_themes_path);
+            data->location = g_strdup(theme_manager_path);
             g_object_set_data_full(G_OBJECT(list_row), "theme_row_data", data, (GDestroyNotify)g_free);
             // Highlight the currently active theme
             if (g_strcmp0(data->theme_name, "Currently Active Theme Name") == 0)
@@ -103,7 +103,7 @@ create_sidebar(AppWidgets *widgets)
         }
         g_list_free(user_theme_list);
     }
-    g_free(user_themes_path);
+    g_free(theme_manager_path);
     g_dir_close(dir);
 
     GtkWidget *sep = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
@@ -305,7 +305,7 @@ activate(GtkApplication *app, gpointer user_data)
     AppWidgets *widgets = g_new0(AppWidgets, 1);
 
     GtkWidget *window = gtk_application_window_new(app);
-    gtk_window_set_title(GTK_WINDOW(window), "User Themes Viewer");
+    gtk_window_set_title(GTK_WINDOW(window), "Theme Manager");
     gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
 
     gtk_window_set_icon_name(GTK_WINDOW(window), "your-icon-name");
@@ -341,7 +341,7 @@ activate(GtkApplication *app, gpointer user_data)
 
 int main(int argc, char **argv)
 {
-    GtkApplication *app = gtk_application_new("com.example.UserThemes", G_APPLICATION_DEFAULT_FLAGS);
+    GtkApplication *app = gtk_application_new("com.example.ThemeManager", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
 
     int status = g_application_run(G_APPLICATION(app), argc, argv);
