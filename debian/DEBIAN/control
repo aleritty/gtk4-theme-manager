@@ -1,4 +1,5 @@
 Source: theme-manager
+Version: 1.0.0-1
 Section: utils
 Priority: optional
 Maintainer: Alerity <aleritty@aleritty.net>
@@ -6,5 +7,5 @@ Build-Depends: debhelper-compat (= 12), pkg-config, gcc, gtk+4.0
 Standards-Version: 4.5.0
 Package: theme-manager
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: libc6, libgtk-4-1
 Description: A GTK4 Theme Manager Application
