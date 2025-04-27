@@ -1,10 +1,9 @@
 Source: theme-manager
 Section: utils
 Priority: optional
-Maintainer: Your Name <your.email@example.com>
+Maintainer: Alerity <aleritty@aleritty.net>
 Build-Depends: debhelper-compat (= 12), pkg-config, gcc, gtk+4.0
 Standards-Version: 4.5.0
-
 Package: theme-manager
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
