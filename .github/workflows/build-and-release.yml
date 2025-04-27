@@ -17,7 +17,7 @@ jobs:
 
       - name: Set up Alpine
         run: |
-          apk add --no-cache gcc musl-dev pkgconf gtk4.0-dev
+          apk add --no-cache gcc musl-dev pkgconf gtk4.0-dev dpkg pacman-makepkg
         shell: sh
 
       - name: Build theme-manager
@@ -35,9 +35,10 @@ jobs:
         run: |
           mkdir -p debian/usr/bin debian/usr/share/icons/hicolor/256x256/apps debian/usr/share/applications
           cp theme-manager debian/usr/bin/
-          cp favicon.png debian/usr/share/icons/hicolor/256x256/apps/theme-manager.png
+          cp favicon.svg debian/usr/share/icons/hicolor/256x256/apps/theme-manager.svg
           cp theme-manager.desktop debian/usr/share/applications/
           dpkg-deb --build debian theme-manager.deb
+          makepkg
         shell: sh
 
       - name: Upload .deb artifact

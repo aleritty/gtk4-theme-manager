@@ -6,6 +6,13 @@ if [ "$1" = "build" ]; then
 elif [ "$1" = "install" ]; then
     makepkg -si
 
+elif [ "$1" = "run" ]; then
+    if [ ! -f "theme-manager" ]; then
+        echo "Error: theme-manager binary not found. Building it."
+        $0 build
+    fi
+    ./theme-manager
+
 elif [ "$1" = "run-act" ]; then
     # Run act with artifact server path
     act --artifact-server-path ./artifacts
